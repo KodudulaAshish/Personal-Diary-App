@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.personaldiary.model.Day;
@@ -41,9 +42,7 @@ public class DayAdapter extends RecyclerView.Adapter<dayViewholder>{
 
     @Override
     public int getItemCount() {
-        if (day.size()==0){
-            return 0;
-        }else return day.size();
+         return null!=day?day.size():0;
     }
 }
 class dayViewholder extends RecyclerView.ViewHolder{

@@ -10,7 +10,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.personaldiary.database.RoomDB;
 import com.example.personaldiary.model.Day;
@@ -21,11 +24,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    DayAdapter dayAdapter;
     List<Day> days = new ArrayList<>();
+    DayClickListener dayClickListener;
+    DayAdapter dayAdapter=new DayAdapter(getApplicationContext(),days, dayClickListener);
     RoomDB database;
     Button addADay;
-    DayClickListener dayClickListener;
+
     private Object DayAdapter;
     dayViewholder dayViewholder;
 
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode==1){
@@ -65,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 database.mainDAO().insert(newday);
                 days.clear();
                 days.addAll(database.mainDAO().getAll());
-                DayAdapter.notify();
+                ((ArrayAdapter)DayAdapter).notifyDataSetChanged();
             }
                 else if(requestCode==2)
             {
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     database.mainDAO().update(updatedday.getID(), updatedday.getDay(), updatedday.getContent());
                     days.clear();
                     days.addAll(database.mainDAO().getAll());
-                    DayAdapter.notify();
+                    ((BaseAdapter)DayAdapter).notifyDataSetChanged();
                 }
             }
         }
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,2);
         }
     };
-};
+}
 
 
 
