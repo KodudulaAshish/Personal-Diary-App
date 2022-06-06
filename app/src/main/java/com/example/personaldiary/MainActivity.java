@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Day> days = new ArrayList<>();
     DayClickListener dayClickListener;
-    DayAdapter dayAdapter=new DayAdapter(getApplicationContext(),days, dayClickListener);
+    DayAdapter dayAdapter;
     RoomDB database;
     Button addADay;
 
